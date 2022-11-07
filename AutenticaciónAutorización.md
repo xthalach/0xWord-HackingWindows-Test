@@ -36,6 +36,23 @@ Se listan los principales SPP que interactúan con SSPI por defecto. Cada uno de
   - NTLM: Implementa el famoso protocolo de desafio/respuesta desarrollado por Microsoft y es aún mantenido para proporcionar compatibilidad con versiones anteriores de Windows. El paquete SSP NTLM incluye la implementación tanto de NTLMv1 como NTLMv2. Ubicación: %windir%\Windows\System32\mvs1_0.dll
   - Digest: Es un mecanismo de desafio/respuesta. Este protocolo ha sido uno de los métodos usados en servidores web para negociar credenciales, tales como nombre de usuario y contraseña, desde el navegador web. También puede usarse en LDAP,HTTP o SASL. Las credenciales se envian por la red en forma de hash MD5 que puede ser descifrada ya que la calve de cifrado fue publicada por Microsoft.
   - Schannel: Schannel implementa los protocolos Secure Socket Layer (SSL) y Transport Layer Security (TLS) utilizados para acceder a una web de modo seguro. Ubicación: %windir%\Windows\System32\schannel.dll
-  - Negotiate: Se utiliza para la negociar el protocolo de autenticación a utilizar. En concreto, Negotiate con Kerberos y NTLM como opciones y seleccionara Kerberos por defecto siempre y cuando sea posible.
+  - Negotiate: Se utiliza para la negociar el protocolo de autenticación a utilizar. En concreto, Negotiate con Kerberos y NTLM como opciones y seleccionara Kerberos por defecto siempre y cuando sea posible. Ubicación: %windir%\Windows\System32\lsasrv.dll
+
+Especificando un unico protocolo de autenticación:
+
+  1. El cliente solicita acceso a un recurso.
+  2. El servidor responde con el protocolo que necesita utilizarse y un reto de autenticación.
+  3. El cliente examina la respuesta y determina si soporta dicho protocolo. Si es así, el proceso de autenticacón continua. De no ser soportado, la autenticación falla con independencia de que el cliente tenga autorización para el recurso.
+
+Negociar el protocolo:
+
+  1. El cliente solicita acceso a un recurso.
+  2. El servidor contesta con una lista de protocolos de autenticación que soporta y un reto de autenticación basado en el protocolo a utilizar por preferencia.
+  3. El cliente examina la respuesta y determina si soporta alguno de los protocolos listados por el servidor.
+   - Si el cliente soporta el protocolo preferido, el proceso de autenticaicón continúa.
+   - Si el cliente no soporta el protocolo sugerido por el servidor, pero sí otro de los soportados, se lo comunica al servidor y la autenticación continúa.
+   - Si el cliente no soporta ninguno de los protocolos, la autenticaicón falla.
+
+
 
 
