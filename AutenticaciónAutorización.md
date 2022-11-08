@@ -56,7 +56,7 @@ Negociar el protocolo:
 
 Signle Sign-on(SSO): Los usuarios sólo necesitan suministrar sus credenciales una vez para consecutivamente acceder a los distintos recursos en red que necesiten autenticación sin necesidad introducir dichas credenciales una y otra vez.
 
-Local Security Authority: Windows guarda de manera local en memoria dichas credenciales en el subsistema Local Security Authority (LSA).
+### Local Security Authority: Windows guarda de manera local en memoria dichas credenciales en el subsistema Local Security Authority (LSA).
 
   - Administrar la politica de seguridad local.
   - Proporciona los servicios para la autenticación o inicio de sesión interactivo.
@@ -69,7 +69,7 @@ Hay dos formas en las que LAS hace la comprovación de dichas credenciales:
 
 El proceso Local Security Authority Subsystem Service (LSASS) es el responsable de imponer las politicas de seguridad, administrar los cambios de contraseña y crear access tokens. Se encarga de mantener en memoria un registro de las politicas de seguridad de las contraseñas y sus credenciales de los usuarios cuyas sesiones Windows están activas. 
 
-LSASS almacenamiento de credenciales:
+### LSASS almacenamiento de credenciales:
   - Tickets Kerberos.
   - Hashes NT.
   - Hashes LAN Manager o LM.
@@ -85,7 +85,7 @@ Ocasiones en donde se guardan las credenciales con LSASS:
  
  [Recomendaciones para mejorar LSASS](https://technet.microsoft.com/en-us/library/dn408187(v=ws.11).aspx) - [Mas información](https://technet.microsoft.com/en-us/itpro/windows/whats-new/security)
  
-## Almacenamiento de las credenciales
+### Almacenamiento de las credenciales
 
 ¿ Donde almacena Windows las credenciales de manera permanente o temporal ?
   - SAM:
@@ -100,6 +100,49 @@ Ocasiones en donde se guardan las credenciales con LSASS:
   - Administrador de credenciales o Credential Manager store: Permite a los usuarios almacenar credenciales de los navegadores soportados y otras aplicaciones Windows.
 
 [Mas informacion](https://technet.microsoft.com/en-us/library/hh994565(v=ws.11).aspx)
+
+## 4.- Access Tokens
+
+Acess token o token de acceso es un objeto o structura de datos que describe el contexto de seguridad de un proceso o hilo. Cuando un usuario inicia sesión en un sistema Windows, el sistema comprueba que las credenciales son correctas y LSA genera un access token asociado a dicho usuario. Por lo tanto en Windows todo proceso o hilo tiene un access token asignado.
+
+Esta estructura de datos contiene información tal como el SID de usuario, el SID de los grupos a los que el usuario pertenece, los privilegios asignados al usuario o sus grupos, referencia a su sesión de logon asociada para realizar Single Sign-On, etc.
+
+[Información sobre access token](https://msdn.microsoft.com/en-us/library/windows/desktop/aa374909(v=vs.85).aspx)
+
+Este token representará la identidad del usuario que está corriendo dicho proceso, así como sus privilegios, cuando se interactúe con otros objetos asegurados de manera local o en red; dicta entonces lo que se puede hacer y lo que no desde el proceso. Windows compara los idetificadores SID contenidos en la lista de control de acceso o ACL, del objeto asegurado con los identificadores SID en el access token del usuario.
+
+Ejercicio practico:
+
+Comprobar el SID de usuario, grupos y permisos contenidos en un determinado access token asociado a un proceso cmd.exe. [Process Explorer](https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer)
+
+Este hecho hace ya entrever que cuando un usuario administrador local inicia sesión en una máquina, dos access token separados se crearán para este usuario: uno estandar y otro de administrador. (UAC)
+
+Los access token forman parte del proceso de autenticación automática contra otros sistemas en la red, cada access token contiene la referencia a la sesión logon asociada, la cual se almacena en LASSS y contiene las credenciales necesarias para realizar el inicio automático de sesion.
+
+Ejercicio practico: 
+
+Se dispone de un servidor Active Directory con un cliente Windows 7 con un usuario de dominio llamado "empleado1" el cual no dispone de privilegios especiales. Se intentara acceder al recurso compartido "c$" en el controlador de dominio "DC1".
+
+Que esta pasando? Como podríamos acceder al recurso compartido ? Como podemos listar las sesiones logon disponibles en cada momento ? [logonsessions](https://learn.microsoft.com/en-us/sysinternals/downloads/logonsessions)
+
+Que pasa cuando ejecutamos el comando runas? Se han generado dos nuevas sesiones generadas para los propositos de Single Sign-On del usuario "admin-dominio1".
+
+Que pasa si ejecutamos el comando runas pero con la opción /netonly ? Este parametro indica que la información del nuevo usuario con la que se correrá el comando será utilizada sólo y únicamente para acceder a un objeto remoto en la red y no de manera local. 
+
+Se podrá acceder al recurso c$ ? Que usuario de volvora el comando whomai? 
+
+Dicho proceso se está ejecutando como el usuario "empleado1" y sólo y únicamente utilizará las credenciales de "admin-dominio1" cuando sea necesario interactuar con un objeto de la red en remoto.
+
+Este último ejemplo muestra claramente que en un access token, el usuario referenciado por su campo SID de usuario no necesariamente debe concidir con el usuario al que pertence la sesión logon referenciada en el mismo. (Posible pregunta)
+
+### Robo y suplantación de tokens
+
+¿ Por que suplantar a otro usuario puede ser útil ?
+  - Ayudar a un atacante a encubrir sus acciones al hacerse pasar por otro usuario.
+  - Permitir una posible escalada de privilegios local y/o en el dominio.
+
+[Información de la herramienta para el robo de tokens Incognito](https://labs.mwrinfosecurity.com/tools/incognito/)
+[Icognito Github](https://github.com/FSecureLABS/incognito)
 
 
 
