@@ -1,6 +1,6 @@
-Autenticación y autorización en Windows
+# Autenticación y autorización en Windows
 
-1.- Introducción
+## 1.- Introducción
 Que es autenticación ? Es el proceso de verificar la identidad de un usuario. Este proceso se utiliza para asegurar que el usuario es realmente quien dice ser.
 [Mas información](https://technet.microsoft.com/en-us/library/dn751047(v=ws.11).aspx)
 
@@ -10,7 +10,7 @@ Windows necesitara comprobar las credenciales para saber si se tienen los permis
 Por defecto, los sistemas Windows, las credenciales se validan en local contra la base de datos Security Account Manager (SAM) o contra un controlador de dominio en caso de tratase 
 de una maquina unida a un dominio Active Directory. Este proceso se llevará a cabo mediante el servicio Winlogon.
 
-2.- Windows Logon
+## 2.- Windows Logon
 Logon es el responsable de recoger las credenciales y proporcionar la autenticación de usuario para posteriormente comprobar si se dispone de los permisos necesarios
 para realizar la acción que se desea frente a un recurso. [Mas información](https://technet.microsoft.com/en-us/library/cc780332(v=ws.10).aspx)
 
@@ -21,7 +21,7 @@ Distintos escenarios de inicio de sesión:
   - Inicio de sesión mediante tarjetas inteligentes o Smart card logon: Se debe disponer de una tarjeta inteligente y su PIN asociado, asi como un lector.
   - Inicio de sesión biométrico: Se acepta este tipo de autenticación donde una característica biométrica como la huella dactilar.
 
-3.- Autenticación y procesamiento de credenciales
+## 3.- Autenticación y procesamiento de credenciales
 Para hacer el proceso de autenticación posible, es necesario que la parte servidor disponga de las claves criptograficas correctas de cada usuario para poder realizar las correspondientes comprobaciones.
 
 ¿ Por que Windows no pide al usuario constantemente que introduzca las credenciales cada vez que accede a cualquier recurso en red ? Esto es posible gracias a un concepto llamado Single Sign-On.
@@ -52,6 +52,41 @@ Negociar el protocolo:
    - Si el cliente soporta el protocolo preferido, el proceso de autenticaicón continúa.
    - Si el cliente no soporta el protocolo sugerido por el servidor, pero sí otro de los soportados, se lo comunica al servidor y la autenticación continúa.
    - Si el cliente no soporta ninguno de los protocolos, la autenticaicón falla.
+
+
+Signle Sign-on(SSO): Los usuarios sólo necesitan suministrar sus credenciales una vez para consecutivamente acceder a los distintos recursos en red que necesiten autenticación sin necesidad introducir dichas credenciales una y otra vez.
+
+Local Security Authority: Windows guarda de manera local en memoria dichas credenciales en el subsistema Local Security Authority (LSA).
+
+  - Administrar la politica de seguridad local.
+  - Proporciona los servicios para la autenticación o inicio de sesión interactivo.
+  - Generar tokens de acceso. 
+  - Administrar las politicas de auditoria.
+
+Hay dos formas en las que LAS hace la comprovación de dichas credenciales:
+  - Si las credenciales son locales. (SAM)
+  - Si las credenciales pertenecen a un dominio contactará con el controlador del dominio para verificar que son correctas.
+
+El proceso Local Security Authority Subsystem Service (LSASS) es el responsable de imponer las politicas de seguridad, administrar los cambios de contraseña y crear access tokens. Se encarga de mantener en memoria un registro de las politicas de seguridad de las contraseñas y sus credenciales de los usuarios cuyas sesiones Windows están activas. 
+
+LSASS almacenamiento de credenciales:
+  - Tickets Kerberos.
+  - Hashes NT.
+  - Hashes LAN Manager o LM.
+  - En plano.
+
+Ocasiones en donde se guardan las credenciales con LSASS:
+  - Iniciar sesión en la maquina de manera local.
+  - Iniciar sesión en la maquina de manera remota.
+  - Ejecutando alguna acción con el comando runas.
+  - Ejecutando un servicio Windows que requiere autenticación.
+  - Ejecutar una tarea programada que requiere de autenticación.
+  - Ejecutar una tarea en la máquina local mediante una herramienta de administración remota.
+ 
+ [Recomendaciones para mejorar LSASS](https://technet.microsoft.com/en-us/library/dn408187(v=ws.11).aspx) - [Mas información](https://technet.microsoft.com/en-us/itpro/windows/whats-new/security)
+ 
+ 
+
 
 
 
