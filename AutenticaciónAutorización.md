@@ -85,9 +85,21 @@ Ocasiones en donde se guardan las credenciales con LSASS:
  
  [Recomendaciones para mejorar LSASS](https://technet.microsoft.com/en-us/library/dn408187(v=ws.11).aspx) - [Mas información](https://technet.microsoft.com/en-us/itpro/windows/whats-new/security)
  
- 
+## Almacenamiento de las credenciales
 
+¿ Donde almacena Windows las credenciales de manera permanente o temporal ?
+  - SAM:
+  - Las contraseñas no son almacenadas en plano. En su lugar se almacenan su hashes NT se encuentra en dicho archivo.
+  - LASSAS: Almacena las credenciales para aquellos usuarios con sesiones activas para acceder a los distintos recursos de red sin necesidad de reintroducir sus credenciales constantemente.
+  - LSA Secret: En algunas ocasiones, LSA guarda ciertas credenciales en disco de manera cifrada.
+      - Contraseña de la cuenta de equipo de Active Directory. (Esto se utilizara cuando el controlador de dominio este fuera de servició)
+      - Contraseñas de las cuentas de servicios Windows configurados en la máquina.
+      - Contraseñas de las cuentas para las tareas programadas.
+      - Contraseñas de applicaciones IIS, cuentas Microsoft, etc.
+  - Base de datos AD DS. La base de datos NTDS.dit contiene las credenciales de todas las cuentas de usuarios y equipos del dominio Active Directory.
+  - Administrador de credenciales o Credential Manager store: Permite a los usuarios almacenar credenciales de los navegadores soportados y otras aplicaciones Windows.
 
+[Mas informacion](https://technet.microsoft.com/en-us/library/hh994565(v=ws.11.aspx)
 
 
 
