@@ -99,7 +99,7 @@ Ocasiones en donde se guardan las credenciales con LSASS:
   - Base de datos AD DS. La base de datos NTDS.dit contiene las credenciales de todas las cuentas de usuarios y equipos del dominio Active Directory.
   - Administrador de credenciales o Credential Manager store: Permite a los usuarios almacenar credenciales de los navegadores soportados y otras aplicaciones Windows.
 
-[Mas informacion](https://technet.microsoft.com/en-us/library/hh994565(v=ws.11.aspx)
+[Mas informacion](https://technet.microsoft.com/en-us/library/hh994565(v=ws.11).aspx)
 
 
 
