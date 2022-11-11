@@ -152,7 +152,15 @@ Sin permisos administrativos, los usuarios no pueden modificar configuraciones c
 
 De este modo, se puede incluso estar trabajando con una cuenta con privilegios de administrador y, sin embargo, las aplicaciones que corren bajo esta cuenta no heredan dichos privilegios adminsitravos a no ser que así sea autorizado explícitamente.
 
-Esto se consigue al tener dos tips de access tokens. El usuario administrador puede ejecutar procesos que requieran permisos adminstrativos realizando una elevación de UAC, por ejemplo, al lanzar el proceso haciendo uso de la opción "Ejecutar como administrador". 
+Esto se consigue al tener dos tips de access tokens. El usuario administrador puede ejecutar procesos que requieran permisos adminstrativos realizando una elevación de UAC, por ejemplo, al lanzar el proceso haciendo uso de la opción "Ejecutar como administrador".
+
+Comando whoami /priv para ver los permisos de los access tokens.
+
+¿ Cómo consigue Windows diferenciar y aislar los diferentes procesos con diferentes permisos ejecutando bajo el mismo usuario ?
+
+UAC hace uso del control de integridad o MIC, del término inglés Mandatory Integrity Control.
+
+Cada proceso pose un nivel de integridad asociado. De este modo, un objeto del sistema con un nivel de integridad menor no podrá acceder a otro objeto con un nivel de integridad mayor.
 
 
 
