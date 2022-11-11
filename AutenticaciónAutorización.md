@@ -142,7 +142,18 @@ Este último ejemplo muestra claramente que en un access token, el usuario refer
   - Permitir una posible escalada de privilegios local y/o en el dominio.
 
 [Información de la herramienta para el robo de tokens Incognito](https://labs.mwrinfosecurity.com/tools/incognito/)
-[Icognito Github](https://github.com/FSecureLABS/incognito)
+[Incognito Github](https://github.com/FSecureLABS/incognito)
+
+## 5.- Control de Cuentas de Usuario (UAC)
+
+UAC del inglés User Account Control, es una tecnología desarrollada para seguridad de los sistemas Windows. UAC se creó con la idea de aplicar de una manera sencilla el concepto de mínimo privilegio posible. Windows limita los permisos y las acciones que un usuario o proceso puede llevar a cabo hasta que un administrador autoriza una elevación. 
+
+Sin permisos administrativos, los usuarios no pueden modificar configuraciones críticas del sistema, como obtener una shell privilegiada, modificar la configuración del cortafuegos, combiar el comportamiento del antivirus, obtener la base de datos SAM, etc.
+
+De este modo, se puede incluso estar trabajando con una cuenta con privilegios de administrador y, sin embargo, las aplicaciones que corren bajo esta cuenta no heredan dichos privilegios adminsitravos a no ser que así sea autorizado explícitamente.
+
+Esto se consigue al tener dos tips de access tokens. El usuario administrador puede ejecutar procesos que requieran permisos adminstrativos realizando una elevación de UAC, por ejemplo, al lanzar el proceso haciendo uso de la opción "Ejecutar como administrador". 
+
 
 
 
