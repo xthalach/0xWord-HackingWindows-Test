@@ -163,6 +163,13 @@ UAC hace uso del control de integridad o MIC, del término inglés Mandatory Int
 Cada proceso pose un nivel de integridad asociado. De este modo, un objeto del sistema con un nivel de integridad menor no podrá acceder a otro objeto con un nivel de integridad mayor.
 
 
+En algunas ocasiones, y dependiendo de la configuración de UAC establecida , los programas del sistema se elevan automáticamente si el usuario pertenece al grupo administrador. Estos binarios se pueden identificar observando su archivo Manifest. Sí éste tiene la opción autoElevate con valor igual a True, significa que no hay necesidad de pedir la elevación de privilegios, se elevará a cabo la elevación sin solicitar la confirmación.
+
+## 6.- Bypass UAC
+
+Las técnicas de bypass UAC permiten a un atacante saltarse el proceso de elevación de UAC y conseguir elevar un proceso sin permisos de adminstrador. La idea fundamental en la que se basa la gran mayoria de estas técnicas es la de encontrar binarios  que tenga activado autoElevate y aprovechar estos privilegios para ejecutar programas con integridad alta.
+
+[Mas información sobre los binariso](https://technet.microsoft.com/en-us/library/2009.07.uac.aspx)
 
 
 
