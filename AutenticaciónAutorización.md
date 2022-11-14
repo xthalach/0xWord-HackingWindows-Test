@@ -171,6 +171,10 @@ Las técnicas de bypass UAC permiten a un atacante saltarse el proceso de elevac
 
 [Mas información sobre los binariso](https://technet.microsoft.com/en-us/library/2009.07.uac.aspx)
 
+### Bypass UAC mediante CompMgmtLauncher 
+
+https://xthalach.github.io/blog/BypassUACCompMgmtLauncher/
+
 
 
 
