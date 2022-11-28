@@ -175,6 +175,15 @@ Las técnicas de bypass UAC permiten a un atacante saltarse el proceso de elevac
 
 https://xthalach.github.io/blog/BypassUACCompMgmtLauncher/
 
+### Bypass UAC mediante sdclt.exe
+
+https://xthalach.github.io/blog/BypassUACAppPaths
+
+### Bypass UAC mediante eventvwr.exe 
+
+https://xthalach.github.io/blog/BypassUACEventViwer
+
+
 
 
 
